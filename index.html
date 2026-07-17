@@ -1,185 +1,480 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NESS TEAM - osu!catch Community</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      scroll-behavior: smooth;
+    }
 
-<title>NESS TEAM</title>
+    html {
+      --color-primary: #ec4899;
+      --color-secondary: #7c3aed;
+      --color-accent: #0ea5e9;
+    }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5/dist/full.min.css" rel="stylesheet">
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #0a0e27 50%, #1a0f2e 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
 
-<style>
-body{
-background:#09090b;
-background-image:
-radial-gradient(circle at top,#ec489955,transparent 35%),
-radial-gradient(circle at bottom,#7c3aed55,transparent 40%);
-}
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 0%, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-.glass{
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.08);
-}
+    main {
+      position: relative;
+      z-index: 1;
+    }
 
-.logo{
-box-shadow:0 0 50px #ec4899;
-}
+    /* Glass morphism */
+    .glass {
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
 
-.card-hover{
-transition:.25s;
-}
+    .glass:hover {
+      background: rgba(15, 23, 42, 0.6);
+      border-color: rgba(236, 72, 153, 0.2);
+      transform: translateY(-4px);
+    }
 
-.card-hover:hover{
-transform:translateY(-6px);
-box-shadow:0 0 25px #ec489955;
-}
-</style>
+    /* Gradient text */
+    .gradient-title {
+      background: linear-gradient(135deg, #ec4899 0%, #a78bfa 50%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradient-shift 8s ease infinite;
+    }
 
+    @keyframes gradient-shift {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    /* Animated glow */
+    .glow {
+      position: relative;
+      z-index: 1;
+    }
+
+    .glow::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(40px);
+      animation: glow-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* Card animations */
+    .card-item {
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: fade-in-up 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .card-item:nth-child(1) { animation-delay: 0.1s; }
+    .card-item:nth-child(2) { animation-delay: 0.2s; }
+    .card-item:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes fade-in-up {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-item:hover {
+      transform: translateY(-8px);
+      border-color: rgba(236, 72, 153, 0.3);
+    }
+
+    /* Button styles */
+    .btn-primary {
+      background: linear-gradient(135deg, #ec4899 0%, #a78bfa 100%);
+      border: none;
+      position: relative;
+      overflow: hidden;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.4);
+    }
+
+    /* Badges */
+    .badge-custom {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(124, 58, 237, 0.1));
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      color: #f1f5f9;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .badge-custom:hover {
+      border-color: rgba(236, 72, 153, 0.6);
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(124, 58, 237, 0.2));
+    }
+
+    /* Section divider */
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.2), transparent);
+    }
+
+    /* Feature icons */
+    .icon-box {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(124, 58, 237, 0.1));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .card-item:hover .icon-box {
+      transform: scale(1.1) rotate(5deg);
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(124, 58, 237, 0.2));
+    }
+
+    /* Logo placeholder */
+    .logo-circle {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #ec4899, #7c3aed);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      margin: 0 auto 2rem;
+      animation: float-up 3s ease-in-out infinite;
+      box-shadow: 0 0 50px rgba(236, 72, 153, 0.4), 0 0 100px rgba(124, 58, 237, 0.2);
+    }
+
+    @keyframes float-up {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Text gradient */
+    .text-gradient {
+      background: linear-gradient(135deg, #ec4899, #0ea5e9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .glow::before {
+        width: 200px;
+        height: 200px;
+      }
+
+      .logo-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 40px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main>
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-4 py-20 relative overflow-hidden">
+      <div class="glow"></div>
+      
+      <div class="max-w-3xl w-full text-center">
+        <!-- Logo Circle -->
+        <div class="logo-circle">
+          <span>🍓</span>
+        </div>
 
-<div class="hero min-h-screen">
+        <!-- Main Title -->
+        <h1 class="text-5xl md:text-7xl font-black mb-4 gradient-title leading-tight">
+          NESS TEAM
+        </h1>
 
-<div class="hero-content text-center max-w-5xl">
+        <!-- Subtitle -->
+        <p class="text-lg md:text-xl text-slate-400 mb-8">
+          osu!catch Community
+        </p>
 
-<div>
+        <!-- Description -->
+        <p class="text-base md:text-lg text-slate-300 mb-10 leading-relaxed">
+          Bergabunglah dengan komunitas pemain <span class="text-gradient font-semibold">osu!catch</span> yang berdedikasi. 
+          Kami fokus pada peningkatan skill, bermain kompetitif, berbagi pengalaman, dan menciptakan lingkungan yang 
+          ramah bagi semua pemain dari berbagai tingkat kemampuan.
+        </p>
 
-<img
-class="w-36 rounded-full mx-auto logo"
-src="https://a.ppy.sh/2">
+        <!-- Badges -->
+        <div class="flex flex-wrap gap-3 justify-center mb-10">
+          <span class="badge-custom">🎮 osu!catch</span>
+          <span class="badge-custom">🍓 Catch The Beat</span>
+          <span class="badge-custom">👥 Community</span>
+        </div>
 
-<h1 class="text-6xl font-black mt-8 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-NESS TEAM
-</h1>
+        <!-- CTA Button -->
+        <a 
+          href="https://osu.ppy.sh/teams/12517" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="btn-primary px-8 py-4 rounded-lg text-white text-lg inline-block mb-16 hover:shadow-2xl"
+        >
+          Bergabung Sekarang →
+        </a>
 
-<p class="mt-6 text-lg opacity-80 max-w-3xl mx-auto leading-8">
+        <!-- Decorative text -->
+        <p class="text-slate-500 text-sm">
+          Mari tingkatkan skill bersama-sama
+        </p>
+      </div>
+    </section>
 
-NESS TEAM adalah komunitas pemain
-<b>osu!catch (Catch the Beat)</b>
-yang berfokus pada peningkatan skill, bermain bersama,
-berbagi pengalaman, serta menciptakan lingkungan yang
-ramah bagi seluruh pemain CTB dari berbagai tingkat kemampuan.
+    <!-- Divider -->
+    <div class="divider-line mx-4 md:mx-0"></div>
 
-</p>
+    <!-- About Section -->
+    <section class="py-20 px-4 md:px-0">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 text-center">
+          Apa itu osu!catch?
+        </h2>
+        
+        <p class="text-slate-400 text-center mb-8 text-sm">Mode bermain yang unik dan menantang</p>
 
-<div class="mt-8 flex justify-center gap-3 flex-wrap">
+        <div class="glass rounded-2xl p-8 md:p-12">
+          <p class="text-slate-300 leading-relaxed text-base md:text-lg mb-6">
+            <span class="text-gradient font-semibold">osu!catch</span> atau <span class="font-semibold">Catch the Beat</span> adalah mode permainan di osu! 
+            yang mengharuskan pemain menangkap buah-buahan yang jatuh menggunakan karakter kecil di bagian bawah layar.
+          </p>
 
-<span class="badge badge-primary badge-lg">
-osu!catch
-</span>
+          <p class="text-slate-300 leading-relaxed text-base md:text-lg">
+            Mode ini mengutamakan <span class="text-pink-400 font-semibold">pembacaan pola (reading)</span>, 
+            <span class="text-purple-400 font-semibold">pergerakan presisi</span>, 
+            <span class="text-cyan-400 font-semibold">kontrol kecepatan</span>, dan 
+            <span class="text-pink-400 font-semibold">konsistensi</span> dibanding sekadar kecepatan klik. 
+            Setiap map adalah tantangan unik yang menguji berbagai aspek skill seorang pemain.
+          </p>
+        </div>
+      </div>
+    </section>
 
-<span class="badge badge-secondary badge-lg">
-Catch The Beat
-</span>
+    <!-- Divider -->
+    <div class="divider-line mx-4 md:mx-0 my-20"></div>
 
-<span class="badge badge-accent badge-lg">
-Community
-</span>
+    <!-- Features Section -->
+    <section class="py-20 px-4 md:px-0">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 text-center">
+          Aspek Utama osu!catch
+        </h2>
+        
+        <p class="text-slate-400 text-center mb-16 text-sm">Tiga pilar utama yang perlu dikuasai</p>
 
-</div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div class="glass card-item rounded-xl p-8 border border-slate-700 hover:border-pink-500/50">
+            <div class="icon-box">🧠</div>
+            <h3 class="text-2xl font-bold text-white mb-4">Reading</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Melatih kemampuan membaca pola map dengan cepat dan akurat. Memahami stream, jump, dan anti-jump patterns 
+              adalah kunci untuk sukses dalam bermain osu!catch.
+            </p>
+          </div>
 
-<div class="mt-8">
+          <!-- Card 2 -->
+          <div class="glass card-item rounded-xl p-8 border border-slate-700 hover:border-purple-500/50">
+            <div class="icon-box">⚡</div>
+            <h3 class="text-2xl font-bold text-white mb-4">Movement</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Menguasai pergerakan karakter secara presisi untuk menangkap seluruh buah. Kecepatan dan accuracy 
+              dalam gerakan sangat penting untuk mencapai skor maksimal.
+            </p>
+          </div>
 
-<a
-href="https://osu.ppy.sh/teams/12517"
-target="_blank"
-class="btn btn-primary btn-lg">
+          <!-- Card 3 -->
+          <div class="glass card-item rounded-xl p-8 border border-slate-700 hover:border-cyan-500/50">
+            <div class="icon-box">🎯</div>
+            <h3 class="text-2xl font-bold text-white mb-4">Consistency</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Menjaga akurasi dan stamina selama map berlangsung. Fokus dan mental fortitude adalah aspek 
+              penting untuk mencapai score tinggi secara konsisten.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-Visit NESS TEAM
+    <!-- Divider -->
+    <div class="divider-line mx-4 md:mx-0 my-20"></div>
 
-</a>
+    <!-- Benefits Section -->
+    <section class="py-20 px-4 md:px-0">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 text-center">
+          Mengapa Bergabung dengan NESS TEAM?
+        </h2>
 
-</div>
+        <p class="text-slate-400 text-center mb-16 text-sm">Keuntungan menjadi bagian dari komunitas kami</p>
 
-</div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Benefit 1 -->
+          <div class="card-item glass rounded-xl p-8 border border-slate-700 text-center">
+            <div class="text-5xl mb-4">🤝</div>
+            <h3 class="text-xl font-bold text-white mb-3">Komunitas Aktif</h3>
+            <p class="text-slate-400">
+              Bermain bersama dengan pemain dari berbagai skill level dan berbagi pengalaman.
+            </p>
+          </div>
 
-</div>
+          <!-- Benefit 2 -->
+          <div class="card-item glass rounded-xl p-8 border border-slate-700 text-center">
+            <div class="text-5xl mb-4">📈</div>
+            <h3 class="text-xl font-bold text-white mb-3">Peningkatan Skill</h3>
+            <p class="text-slate-400">
+              Belajar dari pemain berpengalaman dan saling memberikan tips untuk berkembang.
+            </p>
+          </div>
 
-</div>
+          <!-- Benefit 3 -->
+          <div class="card-item glass rounded-xl p-8 border border-slate-700 text-center">
+            <div class="text-5xl mb-4">🏆</div>
+            <h3 class="text-xl font-bold text-white mb-3">Kompetisi Seru</h3>
+            <p class="text-slate-400">
+              Ikuti turnamen dan challenge untuk menguji kemampuan dengan pemain lainnya.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="max-w-6xl mx-auto px-6 pb-20">
+    <!-- Divider -->
+    <div class="divider-line mx-4 md:mx-0 my-20"></div>
 
-<div class="glass rounded-3xl p-10">
+    <!-- Final CTA Section -->
+    <section class="py-20 px-4 md:px-0">
+      <div class="max-w-2xl mx-auto">
+        <div class="glass rounded-2xl p-12 text-center border border-pink-500/30">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            Siap untuk Bergabung?
+          </h2>
+          
+          <p class="text-slate-400 mb-8 text-lg">
+            Mulai perjalananmu sebagai bagian dari NESS TEAM community sekarang juga.
+          </p>
 
-<h2 class="text-3xl font-bold text-pink-400 mb-6">
-Apa itu osu!catch?
-</h2>
+          <a 
+            href="https://osu.ppy.sh/teams/12517" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="btn-primary px-10 py-4 rounded-lg text-white text-lg inline-block hover:shadow-2xl"
+          >
+            Kunjungi NESS TEAM di osu! →
+          </a>
+        </div>
+      </div>
+    </section>
 
-<p class="leading-8 opacity-80">
+    <!-- Footer -->
+    <footer class="border-t border-slate-700/50 py-12 px-4 mt-20">
+      <div class="max-w-6xl mx-auto text-center">
+        <p class="text-white font-bold text-xl mb-2">
+          NESS TEAM
+        </p>
+        
+        <p class="text-slate-400 mb-6">
+          Dedicated to the osu!catch Community
+        </p>
 
-osu!catch atau Catch the Beat adalah mode permainan
-di osu! yang mengharuskan pemain menangkap buah-buahan
-yang jatuh menggunakan karakter kecil di bagian bawah layar.
-Mode ini mengutamakan pembacaan pola (reading),
-pergerakan yang presisi, kontrol kecepatan,
-serta konsistensi dibanding sekadar kecepatan klik.
-
-</p>
-
-</div>
-
-<div class="grid md:grid-cols-3 gap-6 mt-8">
-
-<div class="glass rounded-3xl p-8 card-hover">
-
-<div class="text-5xl">🍓</div>
-
-<h3 class="font-bold text-xl mt-4">
-Reading
-</h3>
-
-<p class="mt-3 opacity-70">
-Melatih kemampuan membaca pola map dengan cepat dan akurat.
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-8 card-hover">
-
-<div class="text-5xl">🍌</div>
-
-<h3 class="font-bold text-xl mt-4">
-Movement
-</h3>
-
-<p class="mt-3 opacity-70">
-Menguasai pergerakan karakter secara presisi untuk menangkap seluruh buah.
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-8 card-hover">
-
-<div class="text-5xl">🍍</div>
-
-<h3 class="font-bold text-xl mt-4">
-Consistency
-</h3>
-
-<p class="mt-3 opacity-70">
-Menjaga akurasi dan stamina selama map berlangsung.
-</p>
-
-</div>
-
-</div>
-
-<footer class="text-center mt-16 opacity-60">
-
-<p class="font-semibold text-lg">
-NESS TEAM
-</p>
-
-<p>
-Dedicated to the osu!catch Community.
-</p>
-
-</footer>
-
-</section>
-
+        <div class="flex justify-center gap-6 text-sm text-slate-500 flex-wrap">
+          <span>© 2024 NESS TEAM</span>
+          <span>•</span>
+          <a 
+            href="https://osu.ppy.sh" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="text-pink-400 hover:text-pink-300 transition"
+          >
+            osu! Official Website
+          </a>
+          <span>•</span>
+          <span>Built with ❤️</span>
+        </div>
+      </div>
+    </footer>
+  </main>
 </body>
 </html>
