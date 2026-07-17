@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>osu! Team Profile - 12517</title>
+    <style>
+        /* Mengambil font modern */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+        :root {
+            /* Warna khas osu! */
+            --osu-pink: #ff66aa;
+            --osu-pink-hover: #ff88bb;
+            --osu-bg: #121212;
+            --osu-card: #1e1e24;
+            --osu-card-hover: #2a2a35;
+            --text-main: #ffffff;
+            --text-muted: #999999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--osu-bg);
+            color: var(--text-main);
+            /* Latar belakang dengan sedikit gradien memudar */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 102, 170, 0.04), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 102, 170, 0.04), transparent 25%);
+            background-attachment: fixed;
+            line-height: 1.6;
+        }
+
+        /* --- Bagian Banner Atas --- */
+        .hero {
+            height: 350px;
+            /* Banner menggunakan gambar default osu!, bisa diganti URL-nya */
+            background: linear-gradient(to top, var(--osu-bg) 0%, transparent 100%),
+                        url('https://osu.ppy.sh/assets/images/home-hero.8569c762.jpg') center/cover;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 5% 3rem 5%;
+        }
+
+        .team-profile {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-logo {
+            width: 140px;
+            height: 140px;
+            background: var(--osu-card);
+            border-radius: 24px;
+            border: 3px solid var(--osu-pink);
+            box-shadow: 0 8px 32px rgba(255, 102, 170, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--osu-pink);
+            font-weight: 800;
+        }
+
+        .team-info h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+        }
+
+        .badge {
+            background-color: var(--osu-pink);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+
+        /* --- Layout Utama --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .team-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* --- Panel Statistik Kiri --- */
+        .card {
+            background: var(--osu-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-title {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-top: 0.2rem;
+        }
+
+        .stat-value span {
+            color: var(--osu-pink);
+            font-size: 1rem;
+        }
+
+        /* --- Konten Deskripsi & Member --- */
+        .section-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-header::before {
+            content: '';
+            display: block;
+            width: 5px;
+            height: 25px;
+            background-color: var(--osu-pink);
+            border-radius: 5px;
+        }
+
+        .description {
+            color: #ccc;
+            margin-bottom: 3rem;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .member-card {
+            background: var(--osu-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        /* Animasi saat disorot mouse */
+        .member-card:hover {
+            transform: translateY(-5px);
+            background: var(--osu-card-hover);
+            border-color: var(--osu-pink);
+            box-shadow: 0 10px 20px rgba(255, 102, 170, 0.15);
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 25px;
+            margin: 0 auto 1rem;
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover .avatar {
+            border-color: var(--osu-pink);
+            border-radius: 50%;
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .member-role {
+            font-size: 0.85rem;
+            color: var(--osu-pink);
+            background: rgba(255, 102, 170, 0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Banner -->
+    <header class="hero">
+        <div class="team-profile">
+            <div class="team-logo">
+                ID
+            </div>
+            <div class="team-info">
+                <h1>Team 12517</h1>
+                <div class="badge">Official osu! Team</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Panel Kiri: Statistik Tim -->
+        <aside>
+            <div class="card">
+                <div class="stat-box">
+                    <div class="stat-title">Global Rank</div>
+                    <div class="stat-value">#12</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Performance (PP)</div>
+                    <div class="stat-value">54,320 <span>pp</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Play Count</div>
+                    <div class="stat-value">1.2M</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-title">Member Count</div>
+                    <div class="stat-value">4</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel Kanan: Konten Utama -->
+        <section>
+            <!-- Deskripsi Tim -->
+            <h2 class="section-header">Tentang Tim</h2>
+            <div class="card description">
+                <p>Selamat datang di profil tim kami! Kami adalah sekumpulan pemain osu! yang berdedikasi untuk terus berkembang dan mencapai peringkat teratas. Bermain untuk bersenang-senang, namun tetap kompetitif di kancah turnamen.</p>
+                <br>
+                <p><em>"Click the circles... to the beat!"</em></p>
+            </div>
+
+            <!-- Daftar Anggota (Grid) -->
+            <h2 class="section-header">Anggota Tim</h2>
+            <div class="members-grid">
+                
+                <!-- Anggota 1 -->
+                <a href="#" class="member-card">
+                    <!-- Avatar memanggil gambar default ppy.sh, angka bisa diganti dengan ID asli -->
+                    <div class="avatar" style="background-image: url('https://a.ppy.sh/1')"></div>
+                    <div class="member-name">PlayerOne</div>
+                    <div class="member-role">Captain</div>
+                </a>
+
+                <!-- Anggota 2 -->
+                <a href="#" class="member-card">
+                    <div class="avatar" style="background-image: url('https://a.ppy.sh/2')"></div>
+                    <div class="member-name">CircleClicker</div>
+                    <div class="member-role">Member</div>
+                </a>
+
+                <!-- Anggota 3 -->
+                <a href="#" class="member-card">
+                    <div class="avatar" style="background-image: url('https://a.ppy.sh/3')"></div>
+                    <div class="member-name">RhythmGod</div>
+                    <div class="member-role">Member</div>
+                </a>
+
+                <!-- Anggota 4 -->
+                <a href="#" class="member-card">
+                    <div class="avatar" style="background-image: url('https://a.ppy.sh/4')"></div>
+                    <div class="member-name">SpinnerPro</div>
+                    <div class="member-role">Member</div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Dibuat ulang dengan ❤️ menggunakan HTML & CSS. (Bukan antarmuka resmi ppy.sh)</p>
+    </footer>
+
+</body>
+</html>
