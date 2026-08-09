@@ -1,9 +1,40 @@
-/* ==========================================================================
-   NESSID [NSD] — OFFICIAL CSS STYLESHEET
-   Mobile, Android, iOS, & Desktop Multi-Device Responsive Design System
-   ========================================================================== */
+/* ============================================================
+   NESSID [NSD] — MODERN DESIGN SYSTEM & STYLESHEET
+   Official osu!catch Team & Community Web Application
+   ============================================================ */
 
-/* 1. UNIVERSAL RESETS & DEVICE FIXES */
+/* ─── 1. DESIGN TOKENS & CSS VARIABLES ─────────────────────── */
+:root {
+  --bg-dark: #07080c;
+  --bg-card: rgba(13, 16, 26, 0.75);
+  --bg-card-hover: rgba(20, 25, 40, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(244, 63, 94, 0.35);
+  
+  --brand-rose: #f43f5e;
+  --brand-pink: #fb7185;
+  --brand-purple: #c084fc;
+  --brand-cyan: #38bdf8;
+  --brand-amber: #fbbf24;
+  --brand-emerald: #34d399;
+  
+  --text-main: #f4f4f5;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── 2. BASE & RESET ───────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -15,172 +46,332 @@ html {
 }
 
 body {
-  background-color: #07080c;
-  color: #f4f4f5;
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
   overflow-x: hidden;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, canvas {
+  display: block;
+  max-width: 100%;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07080c;
+  background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e2436;
-  border-radius: 4px;
+  background: #1e2538;
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #f43f5e;
+  background: var(--brand-rose);
 }
 
-::selection {
-  background-color: #f43f5e;
+/* ─── 3. LAYOUT CONTAINER ───────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .wrap {
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+
+.sec {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .sec {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+/* ─── 4. GLASS CARDS & INTERACTIVE ELEM ─────────────────────── */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-hover {
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-card-hover:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-glow);
+    box-shadow: 0 12px 36px rgba(244, 63, 94, 0.18), 0 0 0 1px rgba(244, 63, 94, 0.2);
+  }
+}
+
+.glass-card-hover:active {
+  transform: scale(0.985);
+}
+
+/* ─── 5. TYPOGRAPHY & GRADIENTS ─────────────────────────────── */
+.t-hero {
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.t-title {
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.gtext {
+  background: linear-gradient(135deg, #fb7185 0%, #f43f5e 35%, #c084fc 70%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gtext-gold {
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── 6. BUTTONS & CONTROLS ──────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--transition-normal);
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #b91c1c 100%);
   color: #ffffff;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* 2. RESPONSIVE CONTAINER & TYPOGRAPHY ADAPTATION FOR ANDROID & IOS */
-@media (max-width: 640px) {
-  html {
-    font-size: 14px; /* Fluid base sizing for small mobile screens */
-  }
-  
-  .hero-title {
-    font-size: 2.5rem !important;
-    line-height: 1.15 !important;
-  }
-
-  .section-title {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
-  }
-
-  /* Extra mobile padding for notch and bottom bar */
-  .safe-padding-top {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-  .safe-padding-bottom {
-    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+@media (hover: hover) {
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
-  .hero-title {
-    font-size: 4rem !important;
+.btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e4e4e7;
+  border-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+@media (hover: hover) {
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(244, 63, 94, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   }
 }
 
-/* 3. AMBIENT GLOW LIGHTS */
-.glow-orb {
-  position: absolute;
+/* ─── 7. PILLS & BADGES ─────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  border: 1px solid;
+}
+
+/* ─── 8. GLOW ORBS & BACKGROUNDS ────────────────────────────── */
+.orb {
+  position: fixed;
   border-radius: 50%;
   filter: blur(120px);
   pointer-events: none;
   z-index: 0;
 }
-.glow-rose {
-  background: radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(244, 63, 94, 0) 70%);
-}
-.glow-purple {
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(168, 85, 247, 0) 70%);
-}
+.orb-rose   { background: radial-gradient(circle, rgba(244, 63, 94, 0.18) 0%, transparent 70%); }
+.orb-purple { background: radial-gradient(circle, rgba(192, 132, 252, 0.14) 0%, transparent 70%); }
+.orb-cyan   { background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%); }
 
-/* 4. GLASSMORPHISM & CARDS */
-.glass-card {
-  background: rgba(14, 17, 26, 0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-}
-
-.glass-card-interactive {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@media (hover: hover) and (pointer: fine) {
-  .glass-card-interactive:hover {
-    transform: translateY(-6px) scale(1.01);
-    border-color: rgba(244, 63, 94, 0.45);
-    box-shadow: 0 20px 45px -10px rgba(244, 63, 94, 0.3);
-  }
-}
-.glass-card-interactive:active {
-  transform: scale(0.98);
-}
-
-/* 5. INTERACTIVE BUTTON STYLES */
-.btn-interactive {
-  position: relative;
-  overflow: hidden;
-  touch-action: manipulation;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@media (hover: hover) and (pointer: fine) {
-  .btn-interactive:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px -5px rgba(244, 63, 94, 0.5);
-  }
-}
-.btn-interactive:active {
-  transform: translateY(1px) scale(0.96);
-}
-
-/* 6. GRADIENT TEXT & BORDER UTILITIES */
-.gradient-text {
-  background: linear-gradient(135deg, #fb7185 0%, #f43f5e 40%, #c084fc 80%, #60a5fa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* 7. ANIMATION KEYFRAMES & SCROLL REVEAL */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(30px) scale(0.98);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-.reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(1deg); }
-}
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+/* ─── 9. ANIMATIONS ─────────────────────────────────────────── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.03); }
-}
-.animate-pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.03); }
 }
 
-/* 8. FAQ ACCORDION TRANSITIONS */
-.faq-content {
+.anim-float { animation: floatY 6s ease-in-out infinite; }
+.anim-pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
+
+/* Scroll reveal transition */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── 10. NAVIGATION & HEADER ───────────────────────────────── */
+#navbar {
+  transition: padding var(--transition-normal), background-color var(--transition-normal), border-color var(--transition-normal);
+}
+#navbar.scrolled {
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  background-color: rgba(7, 8, 12, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.nav-link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  color: var(--brand-pink);
+}
+
+/* Mobile Navigation Drawer */
+#mobileDrawer {
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#mobileDrawer.hidden-drawer {
+  display: none !important;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+/* ─── 11. ROSTER SEARCH & TABS ──────────────────────────────── */
+.filter-tab {
+  padding: 0.4rem 0.95rem;
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-tab:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-tab.active {
+  background: var(--brand-rose);
+  color: #ffffff;
+  border-color: var(--brand-rose);
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.4);
+}
+
+.search-input {
+  background: rgba(13, 16, 26, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem 0.5rem 2.4rem;
+  font-size: 0.8125rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  width: 100%;
+}
+
+.search-input:focus {
+  border-color: var(--brand-rose);
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2);
+}
+
+/* ─── 12. FAQ ACCORDION ─────────────────────────────────────── */
+.faq-ans {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, padding 0.3s ease;
   opacity: 0;
-}
-.faq-content.is-open {
-  max-height: 350px;
-  opacity: 1;
-  padding-bottom: 1.5rem;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease, padding 0.28s ease;
 }
 
-/* 9. MINI GAME CANVAS TOUCH FIXES FOR ANDROID & IPHONE */
+.faq-ans.open {
+  max-height: 320px;
+  opacity: 1;
+  padding-bottom: 1rem;
+}
+
+/* ─── 13. GAME CANVAS ────────────────────────────────────────── */
 #gameCanvas {
-  touch-action: none; /* Prevents scroll interference while playing game on Android/iPhone */
+  touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   cursor: crosshair;
 }
+
